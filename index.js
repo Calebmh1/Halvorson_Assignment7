@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 
 const PORT = 1200;
 
-const dbUrl = "";
+const dbUrl = "mongodb+srv://admin:password8@cluster0.otp2d.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 
 //Connect to MongoDB
 mongoose.connect(dbUrl,{
