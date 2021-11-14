@@ -120,6 +120,106 @@ app.post('/addStudent', async(req, res)=>{
     }
 });
 
+app.post('/editStudentByID', async (req,res) =>{
+    try {
+        let student = await Student.updateOne({_id: req.body.id}
+            ,{
+                fname: req.body.fname,
+                lname: req.body.lname,
+                dateEntered: req.body.dateEntered
+            });
+
+            if(student)
+            {
+                res.status(200).json("{message: Student Edited}")
+            }
+            else
+            {
+                res.status(200).json("{message: No Student Changed}");
+            }
+    } 
+    catch (error) {
+        return res.status(500).json('{message: could not edit student}');
+    }
+});
+
+
+app.post('/editStudentByFname', async (req,res) =>{
+    try {
+        let student = await Student.updateOne({queryFname: req.body.QueryFname}
+            ,{
+                fname: req.body.fname,
+                lname: req.body.lname,
+                dateEntered: req.body.dateEntered
+            });
+
+            if(student)
+            {
+                res.status(200).json("{message: Student Edited}")
+            }
+            else
+            {
+                res.status(200).json("{message: No Student Changed}");
+            }
+    } 
+    catch (error) {
+        return res.status(500).json('{message: could not edit student}');
+    }
+});
+
+app.post('/editCourseByCourseName', async (req,res) =>{
+    try {
+        let course = await Course.updateOne({courseName: req.body.courseName}
+            ,{
+                courseInstructor: req.body.courseInstructor,
+                courseCredits: req.body.courseCredits,
+                courseID: req.body.courseID,
+                dateEntered: req.body.dateEntered
+            });
+
+            if(course)
+            {
+                res.status(200).json("{message: course Edited}")
+            }
+            else
+            {
+                res.status(200).json("{message: No course Changed}");
+            }
+
+    } 
+    catch (error) {
+        return res.status(500).json('{message: could not edit course}');
+    }
+});
+
+app.post('/deleteCourseById', async (req,res) =>{
+    try {
+        let course = await Course.findOne({_id: req.body.id})
+
+        if(course)
+        {
+            await Course.deleteOne({_id: req.body.id});
+            return res.status(200).json("{message: Course Deleted}");
+        }
+        else
+        {
+            return res.status(200).json("{message: No Object Found}")
+        }
+    } 
+    catch (error) {
+        return res.status(500).json('{message: could not delete course}');
+    }
+});
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Server Started on port ${PORT}`);
 })
+
+
+
+
+
+
